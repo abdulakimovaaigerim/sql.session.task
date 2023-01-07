@@ -1,0 +1,118 @@
+CREATE TABLE teacher(
+    id SERIAL PRIMARY KEY ,
+    first_name VARCHAR NOT NULL ,
+    last_name VARCHAR NOT NULL ,
+    email VARCHAR NOT NULL ,
+    gender VARCHAR CHECK ( gender = 'FEMALE' OR gender = 'MALE' ) NOT NULL
+
+);
+
+CREATE TABLE IF NOT EXISTS laptops(
+    model VARCHAR NOT NULL ,
+    teacher_id INTEGER REFERENCES teacher(id)
+);
+
+
+INSERT INTO teacher(first_name, last_name, email, gender)
+VALUES ('Aijamal', 'Asangazieva', 'a@gmail.com', 'FEMALE'),
+       ('Mukhammed', 'Toichubai uulu', 'm@gmailcom', 'MALE');
+
+
+INSERT INTO laptops(model, teacher_id)
+VALUES ('Iphone', 1),
+       ('Redmi', 2);
+
+
+SELECT * FROM teacher;
+SELECT * FROM laptops;
+
+
+CREATE TABLE school(
+    id SERIAL PRIMARY KEY ,
+    name_school VARCHAR NOT NULL ,
+    address VARCHAR NOT NULL ,
+    number_of_students INTEGER NOT NULL
+);
+
+
+CREATE TABLE home(
+    street VARCHAR NOT NULL ,
+    school_id INTEGER REFERENCES school(id)
+);
+
+
+INSERT INTO school(name_school, address, number_of_students)
+VALUES ('T.Kulatov', 'Yntymak_village', 950),
+       ('B.Osmonov', 'Toolos_village', 470);
+
+
+INSERT INTO home(street, school_id)
+VALUES ('Abyt_biy', 1),
+       ('Abdrazakov', 2);
+
+
+SELECT * FROM school;
+SELECT * FROM home;
+
+
+
+
+CREATE TABLE city(
+    id SERIAL PRIMARY KEY ,
+    name_city VARCHAR NOT NULL ,
+    year_of_release DATE UNIQUE
+);
+
+
+CREATE TABLE car(
+    car_name VARCHAR NOT NULL ,
+    colour VARCHAR NOT NULL ,
+    city_id INTEGER REFERENCES city(id)
+);
+
+
+
+INSERT INTO city(name_city, year_of_release)
+VALUES ('Germany', '2002/9/23'),
+       ('TOKYO', '2007/2/21');
+
+
+INSERT INTO car(car_name, colour, city_id)
+VALUES ('BMW', 'Black', 1),
+       ('Toyota', 'White', 2);
+
+
+SELECT * FROM city;
+SELECT * FROM car;
+
+
+
+CREATE TABLE assistant(
+    id SERIAL PRIMARY KEY ,
+    first_name VARCHAR NOT NULL ,
+    age INTEGER NOT NULL
+);
+
+
+CREATE TABLE phone(
+    id SERIAL PRIMARY KEY ,
+    phone_name VARCHAR NOT NULL ,
+    price INTEGER NOT NULL ,
+    memory INTEGER NOT NULL ,
+    assistant_id INTEGER REFERENCES assistant(id)
+
+);
+
+
+INSERT INTO assistant(first_name, age)
+VALUES  ('Aiperi', 23),
+        ('Aidana', 34);
+
+
+INSERT INTO phone(phone_name, price, memory, assistant_id)
+VALUES ('Samsung', 34000, 128, 1),
+       ('Sony', 17000, 64, 2);
+
+
+SELECT * FROM assistant;
+SELECT * FROM phone;
